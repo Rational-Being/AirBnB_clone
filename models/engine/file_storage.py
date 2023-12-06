@@ -59,14 +59,8 @@ class FileStorage:
                 json_string = json.load(newly_created_file)
 
             for key, value in json_string.items():
-                if value["__class__"] in classes.keys():
-                    value = classes[key.split(".")[0]](**value)
-                    FileSotrage.__objects.update({key: value})
-                else:
-                    FileStorage.__objects.update({key: None})
-
-            # json_string = self.classes()[value["__class__"]](**value)
-            # FileStorage.__objects = json_string
+                json_string = [value["__class__"]](**value)
+                FileStorage.__objects = json_string
         #                FileStorage.__objects[key] = BaseModel(**value)
 
         except Exception:

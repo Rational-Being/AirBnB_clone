@@ -68,7 +68,6 @@ class FileStorage:
             "Place": Place,
             "Review": Review,
         }
-        return classes
 
         try:
             with open(FileStorage.__file_path, "r") as newly_created_file:

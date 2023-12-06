@@ -6,6 +6,8 @@ This module is entry point for command interpreter
 import cmd
 from models.base_model import BaseModel
 import json
+from models import storage
+from models.engine.file_storage import FileStorage
 
 
 
@@ -31,6 +33,7 @@ class HBNBCommand(cmd.Cmd):
         """
         command to quit a program
         """
+        print("quitting program...")
         return True
 
     def emptyline(self, line):
@@ -39,18 +42,24 @@ class HBNBCommand(cmd.Cmd):
         """
         pass
 
-    def do_create(self, line):
+    def do_create(self, _cmd):
         """
         command that creates a user infomation
         """
-        if line == "" or line is None:
+        temp = storage.classes()
+
+        if _cmd == "" or _cmd is None:
             print("** class name missing **")
-        elif line not in storage.Classes()[line]():
+            return
+
+        if _cmd not in temp.keys():
             print("** class doesn't exist **")
-        else:
-            s = storage.classes()[line]()
-            s.save()
-            print(s.id)
+            return
+
+        new_obj = temp[_cmd]()
+        new_obj.save()
+        #new_obj.save(self)
+        print(new_obj.id)
 
     def do_show(self, line):
         """
@@ -60,7 +69,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
         else:
             letters = line.split(' ')
-            if letter[0] not in storage,classes()[line]():
+            if letter[0] not in storage.classes()[line]():
                 print("** class doesn't exist ***")
             elif len(letters) < 2:
                 print("** instance id missing **")

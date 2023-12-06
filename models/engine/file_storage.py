@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 
 from os import path
+import json
 
-class FileStorage():
+
+class FileStorage:
     """
     this class serialize insatnace to Json
     and deserializes Json to instance
@@ -25,7 +27,7 @@ class FileStorage():
         i.e. the neew instance i.e the new user created (obj)
         therefore, he new method populate the __objects class attribute
         """
-        key = "{}.{}".format(obj.__name__, str(obj.id))
+        key = "{}.{}".format(type(obj).__name__, str(obj.id))
         FileStorage.__objects[key] = obj
 
     def save(self):
@@ -36,11 +38,10 @@ class FileStorage():
         """
         objects_created = {}
         for key, value in FileStorage.__objects.items():
-            objects_created[key] = v.to_dict()
-        #objects_created.update({objects_created[key]: v.to_dict() for key, value in FileStorage.__objects.items())
+            objects_created[key] = value.to_dict()
 
-        with open("FileStorage.__file_path", "w") as newly_created_file:
-            json.dumps(objects_created, newly_created_file)
+        with open(FileStorage.__file_path, "w") as newly_created_file:
+            json.dump(objects_created, newly_created_file)
 
     def reload(self):
         """
@@ -56,7 +57,17 @@ class FileStorage():
                 therfore, json.loads is ascribed a variable
                 """
                 json_string = json.load(newly_created_file)
-                for key, value in json_string.items():
-                    FileStorage.__objects[key] = BaseModel(**value)
-        except:
+
+            for key, value in json_string.items():
+                if value["__class__"] in classes.keys():
+                    value = classes[key.split(".")[0]](**value)
+                    FileSotrage.__objects.update({key: value})
+                else:
+                    FileStorage.__objects.update({key: None})
+
+            # json_string = self.classes()[value["__class__"]](**value)
+            # FileStorage.__objects = json_string
+        #                FileStorage.__objects[key] = BaseModel(**value)
+
+        except Exception:
             pass

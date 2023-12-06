@@ -29,7 +29,7 @@ class FileStorage:
         key = "{}.{}".format(type(obj).__name__, str(obj.id))
         FileStorage.__objects[key] = obj
 
-    def classes(self):
+    def existed_classes(self):
         from models.base_model import BaseModel
         from models.user import User
         from models.state import State
@@ -38,7 +38,7 @@ class FileStorage:
         from models.amenity import Amenity
         from models.review import Review
 
-        classes = {
+        existing_classes = {
             "BaseModel": BaseModel,
             "User": User,
             "State": State,
@@ -46,7 +46,7 @@ class FileStorage:
             "Place": Place,
             "Review": Review,
         }
-        return classes
+        return existing_classes
 
     def save(self):
         """
@@ -76,7 +76,7 @@ class FileStorage:
         from models.amenity import Amenity
         from models.review import Review
 
-        classes = {
+        existing_classes = {
             "BaseModel": BaseModel,
             "User": User,
             "State": State,
@@ -94,8 +94,8 @@ class FileStorage:
                 json_strings = json.load(newly_created_file)
 
             for key, value in json_strings.items():
-                if value["__class__"] in classes.keys():
-                    value = classes[key.split(".")[0]](**value)
+                if value["__class__"] in existing_classes.keys():
+                    value = existing_classes[key.split(".")[0]](**value)
                     FileStorage.__objects.update({key: value})
 #                FileStorage.__objects[key] = BaseModel(**value)
 

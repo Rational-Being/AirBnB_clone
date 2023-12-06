@@ -46,7 +46,7 @@ class HBNBCommand(cmd.Cmd):
         """
         command that creates a user infomation
         """
-        temp = storage.classes()
+        temp = storage.existed_classes()
 
         if _cmd == "" or _cmd is None:
             print("** class name missing **")
@@ -60,6 +60,7 @@ class HBNBCommand(cmd.Cmd):
         new_obj.save()
         #new_obj.save(self)
         print(new_obj.id)
+#        print(new_obj.__class__.__name__)
 
     def do_show(self, line):
         """

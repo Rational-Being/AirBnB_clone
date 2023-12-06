@@ -3,7 +3,6 @@
 from os import path
 import json
 
-
 class FileStorage:
     """
     this class serialize insatnace to Json
@@ -29,6 +28,25 @@ class FileStorage:
         """
         key = "{}.{}".format(type(obj).__name__, str(obj.id))
         FileStorage.__objects[key] = obj
+
+    def classes(self):
+        from models.base_model import BaseModel
+        from models.user import User
+        from models.state import State
+        from models.city import City
+        from models.place import Place
+        from models.amenity import Amenity
+        from models.review import Review
+
+        classes = {
+            "BaseModel": Basemodel,
+            "User": User,
+            "State": State,
+            "City": City,
+            "Place": Place,
+            "Review": Review,
+        }
+        return classes
 
     def save(self):
         """
@@ -59,9 +77,10 @@ class FileStorage:
                 json_string = json.load(newly_created_file)
 
             for key, value in json_string.items():
-                json_string = [value["__class__"]](**value)
-                FileStorage.__objects = json_string
-        #                FileStorage.__objects[key] = BaseModel(**value)
+                #json_string = [value["__class__"]](**value)
+                #FileStorage.__objects = json_string
+                FileStorage.__objects[key] = BaseModel(**value)
 
         except Exception:
             pass
+

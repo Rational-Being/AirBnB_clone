@@ -30,23 +30,7 @@ class FileStorage:
         FileStorage.__objects[key] = obj
 
     def classes(self):
-        from models.base_model import BaseModel
-        from models.user import User
-        from models.state import State
-        from models.city import City
-        from models.place import Place
-        from models.amenity import Amenity
-        from models.review import Review
-
-        classes = {
-            "BaseModel": Basemodel,
-            "User": User,
-            "State": State,
-            "City": City,
-            "Place": Place,
-            "Review": Review,
-        }
-        return classes
+        pass
 
     def save(self):
         """
@@ -68,18 +52,37 @@ class FileStorage:
         if not path.isfile(FileStorage.__file_path):
             return
 
+        from models.base_model import BaseModel
+        from models.user import User
+        from models.state import State
+        from models.city import City
+        from models.place import Place
+        from models.amenity import Amenity
+        from models.review import Review
+
+        classes = {
+            "BaseModel": BaseModel,
+            "User": User,
+            "State": State,
+            "City": City,
+            "Place": Place,
+            "Review": Review,
+        }
+        return classes
+
         try:
             with open(FileStorage.__file_path, "r") as newly_created_file:
                 """
                 an attempt to conert json to python strin
                 therfore, json.loads is ascribed a variable
                 """
-                json_string = json.load(newly_created_file)
+                json_strings = json.load(newly_created_file)
 
-            for key, value in json_string.items():
-                #json_string = [value["__class__"]](**value)
-                #FileStorage.__objects = json_string
-                FileStorage.__objects[key] = BaseModel(**value)
+            for key, value in json_strings.items():
+                if value["__class__"] in classes.keys():
+                    value = classes[key.split(".")[0]](**value)
+                    FileStorage.__objects.update({key: value})
+#                FileStorage.__objects[key] = BaseModel(**value)
 
         except Exception:
             pass

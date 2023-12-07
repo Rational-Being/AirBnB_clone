@@ -6,9 +6,6 @@ This module is entry point for command interpreter
 import cmd
 from models.base_model import BaseModel
 import json
-from models import storage
-from models.engine.file_storage import FileStorage
-
 
 
 class HBNBCommand(cmd.Cmd):
@@ -33,7 +30,6 @@ class HBNBCommand(cmd.Cmd):
         """
         command to quit a program
         """
-        print("quitting program...")
         return True
 
     def emptyline(self, line):
@@ -51,8 +47,7 @@ class HBNBCommand(cmd.Cmd):
         if _cmd == "" or _cmd is None:
             print("** class name missing **")
             return
-
-        if _cmd not in temp.keys():
+        if _cmd not in temp.key():
             print("** class doesn't exist **")
             return
 
@@ -60,7 +55,7 @@ class HBNBCommand(cmd.Cmd):
         new_obj.save()
         #new_obj.save(self)
         print(new_obj.id)
-#        print(new_obj.__class__.__name__)
+        #print(new_obj.__class__.__name__)
 
     def do_show(self, line):
         """
@@ -110,13 +105,22 @@ class HBNBCommand(cmd.Cmd):
             if letters[0] not in storage.classes():
                 print("** class doesn't exist **")
             else:
-                l = [str(obj) for key, obj in storage.all().item()
-                    if type(obj).__name__ == word[0]]
-                print(l)
+                le = [str(obj) for key, obj in storage.all().item()
+                      if type(obj).__name__ == word[0]]
+                print(le)
         else:
             fresh_list = [str(obj) for key, obj in storage.all().item()]
             print(fresh_list)
 
+    def do_update(self, line):
+        """
+        command that will update and updating attribute
+        """
+        if line == "" or line is None:
+            print("** class name missing **")
+            return
+
+        rex = 
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()

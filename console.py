@@ -112,6 +112,21 @@ class HBNBCommand(cmd.Cmd):
             fresh_list = [str(obj) for key, obj in storage.all().item()]
             print(fresh_list)
 
+    def do_count(self, line):
+        """
+        command that counts the instance
+        """
+        letters = line.split(' ')
+        if not letter[0]:
+            print("** class name missing **")
+        elif letters[0] not in storage.existed_classes():
+            print("** class doesn't exist **")
+        else:
+            pair = [
+                    a for a in storage.all() if a.startswith(letters[0] + '.')
+                    ]
+            print(len(pair))
+
     def do_update(self, line):
         """
         command that will update and updating attribute

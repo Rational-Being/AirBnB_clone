@@ -53,9 +53,9 @@ class HBNBCommand(cmd.Cmd):
 
         new_obj = temp[_cmd]()
         new_obj.save()
-        #new_obj.save(self)
+        """new_obj.save(self)"""
         print(new_obj.id)
-        #print(new_obj.__class__.__name__)
+        """print(new_obj.__class__.__name__)"""
 
     def do_show(self, line):
         """
@@ -65,12 +65,12 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
         else:
             letters = line.split(' ')
-            if letter[0] not in storage.classes()[line]():
+            if letter[0] not in storage.existed_classes()[line]():
                 print("** class doesn't exist ***")
             elif len(letters) < 2:
                 print("** instance id missing **")
             else:
-                key = "{}.{}".format(words[0], letters[1])
+                key = "{}.{}".format(letters[0], letters[1])
                 if key not in storage.all():
                     print("** no instance found **")
                 else:
@@ -84,7 +84,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
         else:
             letters = line.split(' ')
-            if letters[0] not in storage.classes():
+            if letters[0] not in storage.existed_classes():
                 print("** class doesn't exist **")
             elif len(letters) < 2:
                 print("** instance id missing **")
@@ -102,7 +102,7 @@ class HBNBCommand(cmd.Cmd):
         """
         if line != "":
             letters = line.split(' ')
-            if letters[0] not in storage.classes():
+            if letters[0] not in storage.existed_classes():
                 print("** class doesn't exist **")
             else:
                 le = [str(obj) for key, obj in storage.all().item()
@@ -120,7 +120,6 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
 
-        rex = 
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()

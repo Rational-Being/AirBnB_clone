@@ -125,7 +125,7 @@ class HBNBCommand(cmd.Cmd):
         """
         temp = _cmd.split(" ")
         hold = storage.existed_classes()
-        if not _temp[0]:
+        if not temp[0]:
             print("** class name missing **")
         elif temp[0] not in hold.keys():
             print("** class doesn't exist **")
@@ -133,14 +133,34 @@ class HBNBCommand(cmd.Cmd):
             count_ = [_ for _ in storage.all() if a.startswith(temp[0] + ".")]
             print(len(count_))
 
-    def do_update(self, line):
+    def do_update(self, _cmd):
         """
         command that will update and updating attribute
         """
-        if line == "" or line is None:
-            print("** class name missing **")
-            return
+        temp = _cmd.split(" ")
+        hold = storage.existed_classes()
+        tmp = storage.all()
 
+        if not temp:
+            print("** class name is missing **")
+        elif temp[0] not in hold.keys():
+            print("** class doesn't exist **")
+        elif len(temp) < 2:
+            print("** instance id missing **")
+        else:
+            key = "{}.{}".format(temp[0], temp[1])
+            if key not in tmp.keys():
+                print("** no instance found **")
+            elif len(temp) < 3:
+                print("** attribute name missing **")
+            elif len(temp) < 4:
+                print("** value missing **")
+            else:
+                for _id in tmp.keys():
+                    if _id == key:
+                        setattr(tmp[key], temp[2], temp[3])
+                        storage.save()
+        print(tmp[key])
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()

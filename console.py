@@ -5,11 +5,12 @@ This module is entry point for command interpreter
 
 import cmd
 from models.base_model import BaseModel
+from models import storage
 import json
 
 
 class HBNBCommand(cmd.Cmd):
-    """ This is the class """
+    """This is the class"""
 
     prompt = "(hbnb) "
 
@@ -47,7 +48,7 @@ class HBNBCommand(cmd.Cmd):
         if _cmd == "" or _cmd is None:
             print("** class name missing **")
             return
-        if _cmd not in temp.key():
+        if _cmd not in temp.keys():
             print("** class doesn't exist **")
             return
 
@@ -57,75 +58,80 @@ class HBNBCommand(cmd.Cmd):
         print(new_obj.id)
         """print(new_obj.__class__.__name__)"""
 
-    def do_show(self, line):
+    def do_show(self, _cmd):
         """
         command that shows the input
         """
-        if line == "" or line is None:
+        if _cmd == "" or _cmd is None:
             print("** class name missing **")
         else:
-            letters = line.split(' ')
-            if letter[0] not in storage.existed_classes()[line]():
+            temp = _cmd.split(" ")
+            hold = storage.existed_classes()
+            if temp[0] not in hold.keys():
                 print("** class doesn't exist ***")
-            elif len(letters) < 2:
+            elif len(_cmd) < 2:
                 print("** instance id missing **")
             else:
-                key = "{}.{}".format(letters[0], letters[1])
+                key = "{}.{}".format(temp[0], temp[1])
                 if key not in storage.all():
                     print("** no instance found **")
                 else:
                     print(storage.all()[key])
 
-    def do_destroy(self, line):
+    def do_destroy(self, _cmd):
         """
         command that deletes items
         """
-        if line == "" or line is None:
+        if _cmd == "" or _cmd is None:
             print("** class name missing **")
         else:
-            letters = line.split(' ')
-            if letters[0] not in storage.existed_classes():
+            temp = _cmd.split(" ")
+            hold = storage.existed_classes()
+            if temp[0] not in hold.keys():
                 print("** class doesn't exist **")
-            elif len(letters) < 2:
+            elif len(temp) < 2:
                 print("** instance id missing **")
             else:
-                key = "{}.{}".format(letters[0], letters[1])
+                key = "{}.{}".format(temp[0], temp[1])
                 if key not in storage.all():
                     print("** no instance found **")
                 else:
                     del storage.all()[key]
                     storage.save()
 
-    def do_all(self, line):
+    def do_all(self, _cmd):
         """
         command for all instance
         """
-        if line != "":
-            letters = line.split(' ')
-            if letters[0] not in storage.existed_classes():
+        if _cmd != "":
+            temp = _cmd.split(" ")
+            hold = storage.existed_classes()
+            if temp[0] not in hold.keys():
                 print("** class doesn't exist **")
             else:
-                le = [str(obj) for key, obj in storage.all().item()
-                      if type(obj).__name__ == word[0]]
-                print(le)
+                list_ = [
+                    str(obj)
+                    for key, obj in storage.all().items()
+                    if type(obj).__name__ == temp[0]
+                ]
+                print(list_)
         else:
-            fresh_list = [str(obj) for key, obj in storage.all().item()]
+            fresh_list = [str(obj) for key, obj in storage.all().items()]
             print(fresh_list)
 
-    def do_count(self, line):
+    def do_count(self, _cmd):
         """
         command that counts the instance
         """
-        letters = line.split(' ')
-        if not letter[0]:
+        temp = _cmd.split(" ")
+        hold = storage.existed_classes()
+        if not _temp[0]:
             print("** class name missing **")
-        elif letters[0] not in storage.existed_classes():
+        elif temp[0] not in hold.keys():
             print("** class doesn't exist **")
         else:
-            pair = [
-                    a for a in storage.all() if a.startswith(letters[0] + '.')
-                    ]
-            print(len(pair))
+            count_ = [_ for _ in storage.all() if a.startswith(temp[0] + ".")]
+            print(len(count_))
 
     def do_update(self, line):
         """

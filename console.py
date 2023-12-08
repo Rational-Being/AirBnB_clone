@@ -133,13 +133,52 @@ class HBNBCommand(cmd.Cmd):
             count_ = [_ for _ in storage.all() if a.startswith(temp[0] + ".")]
             print(len(count_))
 
-    def do_update(self, line):
+    def do_update(self, _cmd):
         """
         command that will update and updating attribute
         """
-        if line == "" or line is None:
+        if _cmd == "" or _cmd is None:
             print("** class name missing **")
             return
+        reg = r'^(\S+)(?:\s(\S+)(?:\s(\S+)(?:\s((?:"[^"]*")|(?:(\S)+)))?)?)?'
+        match = re.search(reg, -cmd)
+        NameOfClass = match.group(1)
+        uid = match.group(2)
+        attribute = match.group(3)
+        value = match.group(4)
+        if not match:
+            print("** class name missing **")
+        elif NameOfClass not in storage.existed_classes():
+            print("** class doesn't exist **")
+        elif uid is None:
+            print("** instance is missing **")
+        else:
+            key = "{}.{}".format(NameOfClass, uid)
+            if key not in storage.all():
+                print("** no instance found **")
+            elif not attribute:
+                print("** attribute name missing **")
+            elif not value:
+                print("** value missing **")
+            else:
+                cast = None
+                if not re.search('^".*"$', value):
+                    if '.' in value:
+                        cast = float
+                    else:
+                        cast = int
+                else:
+                    value = value.replace('"', '')
+                attributes = storage.attributes()[NameOfClass]
+                if attributes in attributes:
+                    value = attributes[attributes](value)
+                elif cast:
+                    try:
+                        value = cast(value)
+                    except ValueError:
+                        pass
+                    setattr(storage.all()[key], attribute, value)
+                    storage.all()[key].save()
 
 
 if __name__ == "__main__":

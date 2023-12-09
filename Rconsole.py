@@ -162,5 +162,6 @@ class HBNBCommand(cmd.Cmd):
                         storage.save()
         print(tmp[key])
 
+
 if __name__ == "__main__":
     HBNBCommand().cmdloop()

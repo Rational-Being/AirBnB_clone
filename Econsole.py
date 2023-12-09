@@ -137,11 +137,11 @@ class HBNBCommand(cmd.Cmd):
         """
         command that will update and updating attribute
         """
+        """
         temp = _cmd.split(" ")
         hold = storage.existed_classes()
         tmp = storage.all()
-"""
-=======
+        """
         if _cmd == "" or _cmd is None:
             print("** class name missing **")
             return
@@ -168,12 +168,12 @@ class HBNBCommand(cmd.Cmd):
             else:
                 cast = None
                 if not re.search('^".*"$', value):
-                    if '.' in value:
+                    if "." in value:
                         cast = float
                     else:
                         cast = int
                 else:
-                    value = value.replace('"', '')
+                    value = value.replace('"', "")
                 attributes = storage.attributes()[NameOfClass]
                 if attributes in attributes:
                     value = attributes[attributes](value)
@@ -184,7 +184,8 @@ class HBNBCommand(cmd.Cmd):
                         pass
                     setattr(storage.all()[key], attribute, value)
                     storage.all()[key].save()
->>>>>>> ac7e9c71bcc190d5e18bc3701676d09f503c5f2a
+
+
 """
 
         if not temp:
@@ -207,6 +208,6 @@ class HBNBCommand(cmd.Cmd):
                         setattr(tmp[key], temp[2], temp[3])
                         storage.save()
         print(tmp[key])
-
+"""
 if __name__ == "__main__":
     HBNBCommand().cmdloop()

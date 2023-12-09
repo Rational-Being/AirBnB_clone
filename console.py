@@ -7,6 +7,7 @@ import cmd
 from models.base_model import BaseModel
 from models import storage
 import json
+import re
 
 
 class HBNBCommand(cmd.Cmd):
@@ -38,6 +39,45 @@ class HBNBCommand(cmd.Cmd):
         will do nothing
         """
         pass
+
+    def default(self, _cmd):
+        """
+        a follow-come method that is called when a command line inout is
+        not recogined, this method willbe overriden by the following lines
+        of code, so that eh consile may capture commands that looks like
+        User.mathod()
+        """
+
+        temp_1 = _cmd.split(".")
+        tmp = storage.all()
+
+        if len(temp_1) < 2:
+            return
+
+        temp_2 = temp_1[1].strip(")")
+        temp = temp_2.strip("(")
+        hold = temp_1[0]
+
+        if temp == "all":
+            return self.do_all(hold)
+        elif temp == "count":
+            _count = 0
+            for key in tmp.keys():
+                key_1 = key.split(".")
+                print(key_1)
+                if key_1[0] == hold:
+                    _count += 1
+            print(_count)
+
+        cmd_pattern = re.compile(r'show\("([^"]*)"\)|show\(\)')
+        reg = cmd_pattern.match(temp)
+        print(reg)
+        if temp == cmd_pattern:
+            print(temp)
+            for key in tmp.keys():
+                key_1 = key.split(".")
+                if key_1[1] == hold:
+                    print()
 
     def do_create(self, _cmd):
         """
@@ -116,8 +156,8 @@ class HBNBCommand(cmd.Cmd):
                 ]
                 print(list_)
         else:
-            fresh_list = [str(obj) for key, obj in storage.all().items()]
-            print(fresh_list)
+            list_2 = [str(obj) for key, obj in storage.all().items()]
+            print(list_2)
 
     def do_count(self, _cmd):
         """
@@ -161,6 +201,7 @@ class HBNBCommand(cmd.Cmd):
                         setattr(tmp[key], temp[2], temp[3])
                         storage.save()
         print(tmp[key])
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()

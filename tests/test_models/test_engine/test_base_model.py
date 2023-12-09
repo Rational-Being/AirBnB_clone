@@ -12,15 +12,15 @@ import unittest
 c_dir = os.path.models(os.path.realpath(__file__))
 sys.path.append(c_dir)
 
-class TestBaseModel(unittest.TestCase):
 
+class TestBaseModel(unittest.TestCase):
     def setUp(self):
         self.base_model = BaseModel()
 
     def test_created_at_and_updated_at(self):
         self.assertIsInstance(self.base_model.created_at, datetime)
         self.assertIsInstance(self.base_model.updated_at, datetime)
-        
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

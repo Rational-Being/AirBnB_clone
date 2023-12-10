@@ -35,7 +35,8 @@ class BaseModel:
         """
         This method is called when an object is to be orinted
         """
-        return "[{}] ({}) {}".format(type(self).__name__, self.id, self.__dict__)
+        return "[{}] ({}) {}".\
+            format(type(self).__name__, self.id, self.__dict__)
 
     def save(self):
         """

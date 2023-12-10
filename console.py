@@ -69,15 +69,25 @@ class HBNBCommand(cmd.Cmd):
                     _count += 1
             print(_count)
 
-        cmd_pattern = re.compile(r'show\("([^"]*)"\)|show\(\)')
-        reg = cmd_pattern.match(temp)
-        print(reg)
+        cd = r'^(\S+)(?:\s(\S+)(?:\s(\S+)(?:\s((?:"[^"]*")|(?:(\S)+)))?)?)?'
+        match = re.search(cmd_pattern, temp[1])
+        id_ = match.group(2)
+        attribute = match.group(3)
+        value = match.group(4)
+
+        if match:
+            if temp == id_:
+                print(id_)
+            else:
+                print("dw")
+        """
         if temp == cmd_pattern:
             print(temp)
             for key in tmp.keys():
                 key_1 = key.split(".")
                 if key_1[1] == hold:
                     print()
+        """
 
     def do_create(self, _cmd):
         """

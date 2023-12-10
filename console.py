@@ -91,7 +91,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, _cmd):
         """
-        command that creates a user infomation
+        A command that creates a user infomation
         """
         temp = storage.existed_classes()
 
@@ -110,7 +110,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, _cmd):
         """
-        command that shows the input
+        A command that shows the input
         """
         if _cmd == "" or _cmd is None:
             print("** class name missing **")
@@ -130,7 +130,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_destroy(self, _cmd):
         """
-        command that deletes items
+        A command that deletes items
         """
         if _cmd == "" or _cmd is None:
             print("** class name missing **")
@@ -151,7 +151,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, _cmd):
         """
-        command for all instance
+        A command for all instance
         """
         if _cmd != "":
             temp = _cmd.split(" ")
@@ -171,7 +171,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_count(self, _cmd):
         """
-        command that counts the instance
+        A command that counts the instance
         """
         temp = _cmd.split(" ")
         hold = storage.existed_classes()

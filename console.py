@@ -69,17 +69,6 @@ class HBNBCommand(cmd.Cmd):
                     _count += 1
             print(_count)
 
-        cd = r'^(\S+)(?:\s(\S+)(?:\s(\S+)(?:\s((?:"[^"]*")|(?:(\S)+)))?)?)?'
-        match = re.search(cmd_pattern, temp[1])
-        id_ = match.group(2)
-        attribute = match.group(3)
-        value = match.group(4)
-
-        if match:
-            if temp == id_:
-                print(id_)
-            else:
-                print("dw")
         """
         if temp == cmd_pattern:
             print(temp)

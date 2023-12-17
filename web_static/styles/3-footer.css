@@ -9,7 +9,7 @@ footer {
 }
 
 footer span {
-    vertical-align: middle;
+    display: inline-block;
     color: black;
-    padding-top: 10px;
+    padding-top: 20px;
 }

@@ -5,6 +5,7 @@ div.filters {
     width: 100%;
     border: 1px solid #DDDDDD;
     border-radius: 4px;
+    float: right;
 }
 
 .filters button {
@@ -15,7 +16,6 @@ div.filters {
     width: 20%;
     border-radius: 4px;
     margin-right: 30px;
-
 }
 
 .filters button:hover {
